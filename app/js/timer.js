@@ -1,3 +1,4 @@
+const { ipcRenderer } = require('electron');
 const moment = require('moment');
 
 let seconds;
@@ -17,12 +18,19 @@ module.exports = {
         }, 1000);
     },
 
-    stop() {
+    stop(course) {
         clearInterval(timer);
+
+        let studiedTime = this.seconds2time(seconds);
+        ipcRenderer.send('stopped-course', course, studiedTime);
     },
 
     seconds2time(sec) {
         return moment().startOf('day').seconds(sec).format("HH:mm:ss");
+    },
+
+    getActualFormattedDate() {
+        return moment().format("DD/MM/YYYY hh:mm:ss");
     }
 
 }
