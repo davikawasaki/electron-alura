@@ -1,6 +1,7 @@
 // Destructuring
 // Controls application life cycle
 const { app, BrowserWindow, ipcMain } = require('electron');
+const data = require('./data');
 
 app.on('ready', () => {
     console.log('Application started!');
@@ -40,4 +41,8 @@ ipcMain.on('open-about-window', () => {
 
 ipcMain.on('close-about-window', () => {
     if(aboutWindow !== null) aboutWindow.close();
+});
+
+ipcMain.on('stopped-course', (event, course, studiedTime) => {
+    data.saveData(course, studiedTime);
 });
