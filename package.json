@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/davikawasaki/electron-alura#readme",
   "dependencies": {
-    "electron": "^1.7.10"
+    "electron": "^1.7.10",
+    "moment": "^2.20.1"
   }
 }
