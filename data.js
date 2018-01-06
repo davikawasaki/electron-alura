@@ -38,6 +38,11 @@ module.exports = {
     getData(course) {
         let coursePath = `${__dirname}/data/${course}.json`;
         return jsonfile.readFile(coursePath);
+    },
+
+    getCoursesName() {
+        let files = fs.readdirSync(__dirname + '/data/');
+        return files.map(file => file.substr(0,file.lastIndexOf('.')));
     }
 
 }
