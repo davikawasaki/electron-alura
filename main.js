@@ -1,7 +1,10 @@
 // Destructuring
 // Controls application life cycle
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron');
 const data = require('./data');
+const templateGenerator = require('./template');
+
+let tray = null;
 
 app.on('ready', () => {
     console.log('Application started!');
@@ -10,6 +13,11 @@ app.on('ready', () => {
         width: 600,
         height: 400
     });
+
+    let tray = new Tray(`${__dirname}/app/img/icon-tray.png`);
+    let template = templateGenerator.generateTrayMenu(mainWindow);
+    let trayMenu = Menu.buildFromTemplate(template);
+    tray.setContextMenu(trayMenu);
 
     // File protocol + folder dirname
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
