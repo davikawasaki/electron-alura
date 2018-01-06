@@ -33,3 +33,9 @@ playButton.addEventListener('click', function() {
     imgs = imgs.reverse();
     playButton.src = imgs[0];
 });
+
+ipcRenderer.on('changed-course', (event, course) => {
+    courseSpan.textContent = course;
+    data.getData(course)
+        .then(data => timerSpan.textContent = data.time);
+});
