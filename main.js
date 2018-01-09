@@ -20,6 +20,12 @@ app.on('ready', () => {
     let trayMenu = Menu.buildFromTemplate(template);
     tray.setContextMenu(trayMenu);
 
+    let templateMenu = templateGenerator.generateMainMenuTemplate(app);
+    let mainMenu = Menu.buildFromTemplate(templateMenu);
+    Menu.setApplicationMenu(mainMenu);
+
+    // mainWindow.openDevTools();
+
     // File protocol + folder dirname
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 });
