@@ -7,6 +7,8 @@ let aboutLink = document.querySelector('#link-about');
 let playButton = document.querySelector('.play-button');
 let timerSpan = document.querySelector('.time');
 let courseSpan = document.querySelector('.course');
+let addButton = document.querySelector('.add-button');
+let addField = document.querySelector('.add-field');
 
 window.onload = () => {
     data.getData(courseSpan.textContent)
@@ -38,4 +40,12 @@ ipcRenderer.on('changed-course', (event, course) => {
     courseSpan.textContent = course;
     data.getData(course)
         .then(data => timerSpan.textContent = data.time);
+});
+
+addButton.addEventListener('click', function() {
+    let newCourse = addField.value;
+    courseSpan.textContent = newCourse;
+    timerSpan.textContent = '00:00:00';
+    addField.value = '';
+    ipcRenderer.send('added-course', newCourse);
 });
