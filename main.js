@@ -5,16 +5,17 @@ const data = require('./data');
 const templateGenerator = require('./template');
 
 let tray = null;
+let mainWindow = null;
 
 app.on('ready', () => {
     console.log('Application started!');
     // Renderer process
-    let mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 600,
         height: 400
     });
 
-    let tray = new Tray(`${__dirname}/app/img/icon-tray.png`);
+    tray = new Tray(`${__dirname}/app/img/icon-tray.png`);
     let template = templateGenerator.generateTrayMenu(mainWindow);
     let trayMenu = Menu.buildFromTemplate(template);
     tray.setContextMenu(trayMenu);
@@ -53,4 +54,10 @@ ipcMain.on('close-about-window', () => {
 
 ipcMain.on('stopped-course', (event, course, studiedTime) => {
     data.saveData(course, studiedTime);
+});
+
+ipcMain.on('added-course', (event, course) => {
+    let newTemplate = templateGenerator.addCourseTray(course, mainWindow); 
+    let newTrayMenu = Menu.buildFromTemplate(newTemplate);
+    tray.setContextMenu(newTrayMenu);
 });
