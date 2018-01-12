@@ -27,9 +27,17 @@ playButton.addEventListener('click', function() {
     if(play) {
         timer.stop(courseSpan.textContent);
         play = false;
+        new Notification('Alura Timer', {
+            body: `O curso ${courseSpan.textContent} foi parado!`,
+            icon: 'img/stop-button.png'
+        });
     } else {
         timer.start(timerSpan);
         play = true;
+        new Notification('Alura Timer', {
+            body: `O curso ${courseSpan.textContent} foi iniciado!`,
+            icon: 'img/play-button.png'
+        });
     }
 
     imgs = imgs.reverse();
@@ -48,4 +56,9 @@ addButton.addEventListener('click', function() {
     timerSpan.textContent = '00:00:00';
     addField.value = '';
     ipcRenderer.send('added-course', newCourse);
+});
+
+ipcRenderer.on('shortcut-start-stop', () => {
+    let click = new MouseEvent('click');
+    playButton.dispatchEvent(click);
 });

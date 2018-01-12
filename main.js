@@ -1,6 +1,6 @@
 // Destructuring
 // Controls application life cycle
-const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut } = require('electron');
 const data = require('./data');
 const templateGenerator = require('./template');
 
@@ -25,6 +25,9 @@ app.on('ready', () => {
     Menu.setApplicationMenu(mainMenu);
 
     // mainWindow.openDevTools();
+    globalShortcut.register('CmdOrCtrl+Shift+S', () => {
+        mainWindow.send('shortcut-start-stop');
+    });
 
     // File protocol + folder dirname
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
