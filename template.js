@@ -54,7 +54,8 @@ module.exports = {
                         label: 'Alura Timer',
                         click: () => {
                             ipcMain.emit('open-about-window');
-                        }
+                        },
+                        accelerator: 'CmdOrCtrl+I'
                     }
                 ]
             }
