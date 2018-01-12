@@ -45,12 +45,19 @@ playButton.addEventListener('click', function() {
 });
 
 ipcRenderer.on('changed-course', (event, course) => {
+    timer.stop(courseSpan.textContent);
     courseSpan.textContent = course;
     data.getData(course)
-        .then(data => timerSpan.textContent = data.time);
+        .then(data => timerSpan.textContent = data.time)
+        .catch(err => timerSpan.textContent = "00:00:00");
 });
 
 addButton.addEventListener('click', function() {
+    if(addField.value == '') {
+        new Notification('Não é possível inserir um curso vazio!'); 
+        return;
+    }
+    
     let newCourse = addField.value;
     courseSpan.textContent = newCourse;
     timerSpan.textContent = '00:00:00';
